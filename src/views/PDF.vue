@@ -144,16 +144,30 @@ export default {
   data: function() {
     return {
       message: "Welcome to Vue.js!",
+      options: {
+        orientation: 'p',
+        unit: 'mm',
+        format: 'government-letter',
+        putOnlyUsedFonts:false,
+        floatPrecision: 16 // or "smart", default is 16
+      }
     };
   },
   created: function() {
 
   },
   methods: {
-    printPDF: function() {
-      var printDoc = new jsPDF();
+    printPDF: function(options) {
+      var printDoc = new jsPDF(this.options);
       let html = document.querySelector("#pdf").innerHTML;
-      printDoc.fromHTML(html, 10, 10, {'width': 180});
+      console.log(html);
+      // printDoc.setFont('courier');
+      // printDoc.setFontSize(32);
+      printDoc.fromHTML(html, 20, 20);
+      // printDoc.addPage();
+      // printDoc.setFont('courier');
+      // printDoc.setFontSize(32);
+      // printDoc.text(20, 20, html);
       printDoc.autoPrint();
       printDoc.output("dataurlnewwindow"); // this opens a new popup,  after this the PDF opens the print window view but there are browser inconsistencies with how this is handled
       // printDoc.save('Resume.pdf'); //This line will download the pdf
